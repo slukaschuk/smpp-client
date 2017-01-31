@@ -1,4 +1,4 @@
-package ua.com.spiritus;
+package ua.com.spiritus.services;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,6 @@ public class AppService {
     private Environment environment;
 
     public String getPhoneNumber() {
-        return environment.getProperty("test.dst.number");
+        return environment.getProperty("dst.number");
     }
 }
