@@ -24,13 +24,11 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private AppService appService;
 
-    @Autowired
-    private SMPPSession smppSession;
-
     private static TimeFormatter timeFormatter = new AbsoluteTimeFormatter();
 
     @Override
     public boolean sendMessage(final SmsMessage smsMessage) {
+        SMPPSession smppSession = new SMPPSession();
         try {
             smppSession.connectAndBind(appService.getHost(), appService.getPort(),
                     new BindParameter(
@@ -44,6 +42,7 @@ public class MessageServiceImpl implements MessageService {
         } catch (IOException e) {
             System.out.println("Failed connect and bind to host");
             log.error("Failed connect and bind to host: " + e.getMessage());
+            e.printStackTrace();
         }
         try {
             String messageId = smppSession.submitShortMessage("CMT", TypeOfNumber.INTERNATIONAL, NumberingPlanIndicator.UNKNOWN, smsMessage.getSenderNumber(),
